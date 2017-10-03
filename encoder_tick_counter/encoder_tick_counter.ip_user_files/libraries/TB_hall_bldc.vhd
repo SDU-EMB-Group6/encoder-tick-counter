@@ -40,12 +40,12 @@ architecture Behavioral of TB_hall_bldc is
         Port ( clk_200M_in : in STD_LOGIC;
                hall_in : in STD_LOGIC_VECTOR (2 downto 0);
                reset_in : in STD_LOGIC;
-               encoder_pos_out : out STD_LOGIC_VECTOR (2 downto 0));
+               encoder_pos_out : out STD_LOGIC_VECTOR (31 downto 0));
     end component;
     
  signal clk : std_logic;
  signal hal : STD_LOGIC_VECTOR (2 downto 0);
- signal enc_pos : STD_LOGIC_VECTOR (2 downto 0);
+ signal enc_pos : STD_LOGIC_VECTOR (31 downto 0);
  signal reset : std_logic;
  signal dir_ccw : std_logic;
  

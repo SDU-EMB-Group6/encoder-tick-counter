@@ -35,7 +35,7 @@ entity bldc_decoder is
     Port ( clk_200M_in : in STD_LOGIC;
            hall_in : in STD_LOGIC_VECTOR (2 downto 0);
            reset_in : in STD_LOGIC;
-           encoder_pos_out : out STD_LOGIC_VECTOR (2 downto 0));
+           encoder_pos_out : out STD_LOGIC_VECTOR (31 downto 0));
 end bldc_decoder;
 
 architecture Behavioral of bldc_decoder is
