@@ -85,7 +85,7 @@ begin
 
         when low_wait => 
             filtered_signal_out <= '0';
-            if((raw_signal_in = '1') and (timer_reg >= unsigned(delay_in)-1)) then
+            if((raw_signal_in='1') and (timer_reg>=unsigned(delay_in)-1)) then
                 nx_state <= high_rest;
             elsif(raw_signal_in = '0') then
                 nx_state <= low_rest;
@@ -103,7 +103,7 @@ begin
         
         when high_wait =>
             filtered_signal_out <= '1';
-            if((raw_signal_in = '0') and (timer_reg >= unsigned(delay_in)-1)) then
+            if((raw_signal_in='0') and (timer_reg>=unsigned(delay_in)-1)) then
                 nx_state <= low_rest;
             elsif(raw_signal_in = '1') then
                 nx_state <= high_rest;
