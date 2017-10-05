@@ -1,3 +1,6 @@
 ## Vivado auxiliary folders
 **/*.runs/**
 **/*.cache/**
+
+**.jou
+**.log

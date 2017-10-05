@@ -38,8 +38,8 @@ end bldc_decoder;
 architecture Behavioral of bldc_decoder is
 
 type bldc_state is (state_1, state_2, state_3, state_4, state_5, state_6);
-signal current_state : bldc_state;
-signal counter_val : std_logic_vector(31 downto 0);
+signal current_state : bldc_state := state_1;
+signal counter_val : std_logic_vector(31 downto 0) := (others => '0');
 
 begin
 -- Set the output value to the counter of the FSM
