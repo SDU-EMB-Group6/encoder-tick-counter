@@ -1,8 +1,0 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "/home/jalop17/02-SDU/02-Robot_Electronics/Lab-02/encoder-tick-counter/encoder_tick_counter/encoder_tick_counter.ip_user_files/libraries/bldc_decoder.vhd" into library xil_defaultlib
-INFO: [VRFC 10-307] analyzing entity bldc_decoder
-INFO: [VRFC 10-163] Analyzing VHDL file "/home/jalop17/02-SDU/02-Robot_Electronics/Lab-02/encoder-tick-counter/encoder_tick_counter/encoder_tick_counter.ip_user_files/libraries/TB_hall_bldc.vhd" into library xil_defaultlib
-INFO: [VRFC 10-307] analyzing entity TB_hall_bldc
-INFO: [VRFC 10-163] Analyzing VHDL file "/home/jalop17/02-SDU/02-Robot_Electronics/Lab-02/encoder-tick-counter/encoder_tick_counter/encoder_tick_counter.ip_user_files/libraries/bldc_decoder.vhd" into library xil_defaultlib
-INFO: [VRFC 10-307] analyzing entity bldc_decoder
-INFO: [VRFC 10-163] Analyzing VHDL file "/home/jalop17/02-SDU/02-Robot_Electronics/Lab-02/encoder-tick-counter/encoder_tick_counter/encoder_tick_counter.ip_user_files/libraries/TB_hall_bldc.vhd" into library xil_defaultlib
-INFO: [VRFC 10-307] analyzing entity TB_hall_bldc
