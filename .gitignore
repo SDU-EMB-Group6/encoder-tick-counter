@@ -1,8 +1,13 @@
-## Vivado auxiliary folders
+## Vivado auxiliary folders.
 **/*.runs/**
 **/*.cache/**
-## Simulation compilation files
-**/xsim.dir/**
+
+## Simulation compilation files.
+*.sim/**/xsim.dir/**
+*.sim/**.sh
 **.wdb
-**.jou
+
+## Log and back-up files.
+**.bak
 **.log
+**.jou
