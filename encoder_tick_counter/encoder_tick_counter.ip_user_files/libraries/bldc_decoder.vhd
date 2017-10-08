@@ -30,7 +30,7 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity bldc_decoder is
     Port ( clk_200M_in : in std_logic;
-           hall_in : in std_logic_vector (0 downto 2);
+           hall_in : in std_logic_vector (2 downto 0);
            reset_in : in std_logic;
            encoder_pos_out : out std_logic_vector (31 downto 0));
 end bldc_decoder;
