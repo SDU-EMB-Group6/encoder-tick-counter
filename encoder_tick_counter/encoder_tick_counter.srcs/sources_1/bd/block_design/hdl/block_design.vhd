@@ -1,7 +1,7 @@
 --Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2017.2 (lin64) Build 1909853 Thu Jun 15 18:39:10 MDT 2017
---Date        : Sun Oct  8 14:17:07 2017
+--Date        : Sun Oct  8 15:55:47 2017
 --Host        : javi-SAT-L850-Ubuntu running 64-bit Ubuntu 16.04.3 LTS
 --Command     : generate_target block_design.bd
 --Design      : block_design
@@ -36,6 +36,8 @@ entity block_design is
     FIXED_IO_ps_srstb : inout STD_LOGIC;
     delay_in : in STD_LOGIC_VECTOR ( 23 downto 0 );
     encoder_pos_out : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    filtered_signal_out : out STD_LOGIC;
+    hall_in : in STD_LOGIC_VECTOR ( 2 downto 0 );
     raw_signal_in : in STD_LOGIC;
     reset_in : in STD_LOGIC
   );
@@ -120,6 +122,14 @@ architecture STRUCTURE of block_design is
     PS_PORB : inout STD_LOGIC
   );
   end component block_design_processing_system7_0_0;
+  component block_design_bldc_decoder_0_0 is
+  port (
+    clk_200M_in : in STD_LOGIC;
+    hall_in : in STD_LOGIC_VECTOR ( 2 downto 0 );
+    reset_in : in STD_LOGIC;
+    encoder_pos_out : out STD_LOGIC_VECTOR ( 31 downto 0 )
+  );
+  end component block_design_bldc_decoder_0_0;
   component block_design_debounce_0_0 is
   port (
     clk_200M_in : in STD_LOGIC;
@@ -129,17 +139,10 @@ architecture STRUCTURE of block_design is
     filtered_signal_out : out STD_LOGIC
   );
   end component block_design_debounce_0_0;
-  component block_design_bldc_decoder_0_0 is
-  port (
-    clk_200M_in : in STD_LOGIC;
-    hall_in : in STD_LOGIC_VECTOR ( 2 downto 0 );
-    reset_in : in STD_LOGIC;
-    encoder_pos_out : out STD_LOGIC_VECTOR ( 31 downto 0 )
-  );
-  end component block_design_bldc_decoder_0_0;
   signal bldc_decoder_0_encoder_pos_out : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal debounce_0_filtered_signal_out : STD_LOGIC;
   signal delay_in_1 : STD_LOGIC_VECTOR ( 23 downto 0 );
+  signal hall_in_1 : STD_LOGIC_VECTOR ( 2 downto 0 );
   signal processing_system7_0_DDR_ADDR : STD_LOGIC_VECTOR ( 14 downto 0 );
   signal processing_system7_0_DDR_BA : STD_LOGIC_VECTOR ( 2 downto 0 );
   signal processing_system7_0_DDR_CAS_N : STD_LOGIC;
@@ -201,15 +204,15 @@ architecture STRUCTURE of block_design is
 begin
   delay_in_1(23 downto 0) <= delay_in(23 downto 0);
   encoder_pos_out(31 downto 0) <= bldc_decoder_0_encoder_pos_out(31 downto 0);
+  filtered_signal_out <= debounce_0_filtered_signal_out;
+  hall_in_1(2 downto 0) <= hall_in(2 downto 0);
   raw_signal_in_1 <= raw_signal_in;
   reset_in_1 <= reset_in;
 bldc_decoder_0: component block_design_bldc_decoder_0_0
      port map (
       clk_200M_in => processing_system7_0_FCLK_CLK1,
       encoder_pos_out(31 downto 0) => bldc_decoder_0_encoder_pos_out(31 downto 0),
-      hall_in(2) => debounce_0_filtered_signal_out,
-      hall_in(1) => debounce_0_filtered_signal_out,
-      hall_in(0) => debounce_0_filtered_signal_out,
+      hall_in(2 downto 0) => hall_in_1(2 downto 0),
       reset_in => reset_in_1
     );
 debounce_0: component block_design_debounce_0_0

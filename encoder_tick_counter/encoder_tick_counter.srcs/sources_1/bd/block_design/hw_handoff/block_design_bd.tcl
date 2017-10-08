@@ -167,6 +167,8 @@ proc create_root_design { parentCell } {
   # Create ports
   set delay_in [ create_bd_port -dir I -from 23 -to 0 delay_in ]
   set encoder_pos_out [ create_bd_port -dir O -from 31 -to 0 encoder_pos_out ]
+  set filtered_signal_out [ create_bd_port -dir O filtered_signal_out ]
+  set hall_in [ create_bd_port -dir I -from 2 -to 0 hall_in ]
   set raw_signal_in [ create_bd_port -dir I raw_signal_in ]
   set reset_in [ create_bd_port -dir I -type rst reset_in ]
 
@@ -915,8 +917,9 @@ CONFIG.PCW_WDT_PERIPHERAL_FREQMHZ {133.333333} \
 
   # Create port connections
   connect_bd_net -net bldc_decoder_0_encoder_pos_out [get_bd_ports encoder_pos_out] [get_bd_pins bldc_decoder_0/encoder_pos_out]
-  connect_bd_net -net debounce_0_filtered_signal_out [get_bd_pins bldc_decoder_0/hall_in] [get_bd_pins debounce_0/filtered_signal_out]
+  connect_bd_net -net debounce_0_filtered_signal_out [get_bd_ports filtered_signal_out] [get_bd_pins debounce_0/filtered_signal_out]
   connect_bd_net -net delay_in_1 [get_bd_ports delay_in] [get_bd_pins debounce_0/delay_in]
+  connect_bd_net -net hall_in_1 [get_bd_ports hall_in] [get_bd_pins bldc_decoder_0/hall_in]
   connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK]
   connect_bd_net -net processing_system7_0_FCLK_CLK1 [get_bd_pins bldc_decoder_0/clk_200M_in] [get_bd_pins debounce_0/clk_200M_in] [get_bd_pins processing_system7_0/FCLK_CLK1]
   connect_bd_net -net raw_signal_in_1 [get_bd_ports raw_signal_in] [get_bd_pins debounce_0/raw_signal_in]

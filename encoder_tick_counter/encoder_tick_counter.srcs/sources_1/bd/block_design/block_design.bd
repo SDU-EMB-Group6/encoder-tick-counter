@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:BoundaryCRC="0x24DDF46803D5EEF6" bd:device="xc7z010clg225-1" bd:isValidated="true" bd:synthFlowMode="Hierarchical" bd:tool_version="2017.2" bd:top="block_design" bd:version="1.00.a">
+<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:BoundaryCRC="0x95A4882B7505B43B" bd:device="xc7z010clg225-1" bd:isValidated="true" bd:synthFlowMode="Hierarchical" bd:tool_version="2017.2" bd:top="block_design" bd:version="1.00.a">
 
   <spirit:component xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009">
     <spirit:vendor>xilinx.com</spirit:vendor>
@@ -215,6 +215,22 @@
               <spirit:left>31</spirit:left>
               <spirit:right>0</spirit:right>
             </spirit:vector>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>hall_in</spirit:name>
+          <spirit:wire>
+            <spirit:direction>in</spirit:direction>
+            <spirit:vector>
+              <spirit:left>2</spirit:left>
+              <spirit:right>0</spirit:right>
+            </spirit:vector>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>filtered_signal_out</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
           </spirit:wire>
         </spirit:port>
       </spirit:ports>
@@ -716,22 +732,22 @@
         </spirit:configurableElementValues>
       </spirit:componentInstance>
       <spirit:componentInstance>
-        <spirit:instanceName>debounce_0</spirit:instanceName>
-        <spirit:componentRef spirit:library="module_ref" spirit:name="debounce" spirit:vendor="user.org" spirit:version="1.0"/>
+        <spirit:instanceName>bldc_decoder_0</spirit:instanceName>
+        <spirit:componentRef spirit:library="module_ref" spirit:name="bldc_decoder" spirit:vendor="user.org" spirit:version="1.0"/>
         <spirit:configurableElementValues>
-          <spirit:configurableElementValue spirit:referenceId="bd:xciName">block_design_debounce_0_0</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="bd:referenceName">debounce</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:xciName">block_design_bldc_decoder_0_0</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:referenceName">bldc_decoder</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="bd:subInstancePath"></spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="bd:referenceType">hdl</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="bd:BoundaryCRC">0x0</spirit:configurableElementValue>
         </spirit:configurableElementValues>
       </spirit:componentInstance>
       <spirit:componentInstance>
-        <spirit:instanceName>bldc_decoder_0</spirit:instanceName>
-        <spirit:componentRef spirit:library="module_ref" spirit:name="bldc_decoder" spirit:vendor="user.org" spirit:version="1.0"/>
+        <spirit:instanceName>debounce_0</spirit:instanceName>
+        <spirit:componentRef spirit:library="module_ref" spirit:name="debounce" spirit:vendor="user.org" spirit:version="1.0"/>
         <spirit:configurableElementValues>
-          <spirit:configurableElementValue spirit:referenceId="bd:xciName">block_design_bldc_decoder_0_0</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="bd:referenceName">bldc_decoder</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:xciName">block_design_debounce_0_0</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:referenceName">debounce</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="bd:subInstancePath"></spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="bd:referenceType">hdl</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="bd:BoundaryCRC">0x0</spirit:configurableElementValue>
@@ -748,8 +764,8 @@
       <spirit:adHocConnection>
         <spirit:name>processing_system7_0_FCLK_CLK1</spirit:name>
         <spirit:internalPortReference spirit:componentRef="processing_system7_0" spirit:portRef="FCLK_CLK1"/>
-        <spirit:internalPortReference spirit:componentRef="debounce_0" spirit:portRef="clk_200M_in"/>
         <spirit:internalPortReference spirit:componentRef="bldc_decoder_0" spirit:portRef="clk_200M_in"/>
+        <spirit:internalPortReference spirit:componentRef="debounce_0" spirit:portRef="clk_200M_in"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>delay_in_1</spirit:name>
@@ -764,8 +780,8 @@
       <spirit:adHocConnection>
         <spirit:name>reset_in_1</spirit:name>
         <spirit:externalPortReference spirit:portRef="reset_in"/>
-        <spirit:internalPortReference spirit:componentRef="debounce_0" spirit:portRef="reset_in"/>
         <spirit:internalPortReference spirit:componentRef="bldc_decoder_0" spirit:portRef="reset_in"/>
+        <spirit:internalPortReference spirit:componentRef="debounce_0" spirit:portRef="reset_in"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>bldc_decoder_0_encoder_pos_out</spirit:name>
@@ -773,9 +789,14 @@
         <spirit:externalPortReference spirit:portRef="encoder_pos_out"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
+        <spirit:name>hall_in_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="hall_in"/>
+        <spirit:internalPortReference spirit:componentRef="bldc_decoder_0" spirit:portRef="hall_in"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
         <spirit:name>debounce_0_filtered_signal_out</spirit:name>
         <spirit:internalPortReference spirit:componentRef="debounce_0" spirit:portRef="filtered_signal_out"/>
-        <spirit:internalPortReference spirit:componentRef="bldc_decoder_0" spirit:portRef="hall_in"/>
+        <spirit:externalPortReference spirit:portRef="filtered_signal_out"/>
       </spirit:adHocConnection>
     </spirit:adHocConnections>
     <spirit:hierConnections>

@@ -1,10 +1,10 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2017.2 (lin64) Build 1909853 Thu Jun 15 18:39:10 MDT 2017
-// Date        : Wed Oct  4 09:54:03 2017
+// Date        : Wed Oct  4 09:54:01 2017
 // Host        : javi-SAT-L850-Ubuntu running 64-bit Ubuntu 16.04.3 LTS
-// Command     : write_verilog -force -mode synth_stub
-//               /home/jalop17/02-SDU/02-Robot_Electronics/Lab-02/encoder-tick-counter/encoder_tick_counter/encoder_tick_counter.srcs/sources_1/bd/block_design/ip/block_design_processing_system7_0_0_1/block_design_processing_system7_0_0_stub.v
+// Command     : write_verilog -force -mode synth_stub -rename_top block_design_processing_system7_0_0 -prefix
+//               block_design_processing_system7_0_0_ block_design_processing_system7_0_0_stub.v
 // Design      : block_design_processing_system7_0_0
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7z010clg225-1
