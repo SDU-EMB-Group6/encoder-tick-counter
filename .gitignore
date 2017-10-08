@@ -1,6 +1,8 @@
 ## Vivado auxiliary folders
 **/*.runs/**
 **/*.cache/**
-
+## Simulation compilation files
+**/xsim.dir/**
+**.wdb
 **.jou
 **.log

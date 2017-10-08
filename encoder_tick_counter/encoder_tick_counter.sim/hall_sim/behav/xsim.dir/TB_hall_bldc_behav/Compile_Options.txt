@@ -1,1 +1,0 @@
--wto "61e774fd5069403cbbe6cd8d02068a80" --debug "typical" --relax --mt "8" -L "xil_defaultlib" -L "secureip" -L "xpm" --snapshot "TB_hall_bldc_behav" "xil_defaultlib.TB_hall_bldc" -log "elaborate.log" 
