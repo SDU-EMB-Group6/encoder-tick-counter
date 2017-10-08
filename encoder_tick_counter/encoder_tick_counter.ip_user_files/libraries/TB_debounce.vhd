@@ -42,7 +42,7 @@ architecture Behavioral of TB_debounce is
     -- Signals declaration.
     signal clk              : std_logic;
     signal raw_signal       : std_logic;
-    signal delay            : std_logic_vector (23 downto 0) := x"000fff";
+    signal delay            : std_logic_vector (23 downto 0) := x"000005";
     signal reset            : std_logic := '0';
     signal filtered_signal  : std_logic;
     signal edge_dir         : std_logic := '0';

@@ -59,7 +59,7 @@ end process;
 -----------------------------------------------------------------------
 -- FSM combinational logic
 -----------------------------------------------------------------------
-process(pr_state)
+process(pr_state, raw_signal_in, timer_reg)
 begin
     case pr_state is
         when idle =>
