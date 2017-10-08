@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed Oct  4 09:52:50 2017" VIVADOVERSION="2017.2">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Sun Oct  8 14:17:08 2017" VIVADOVERSION="2017.2">
 
   <SYSTEMINFO ARCH="zynq" BOARD="trenz.biz:te0726_m:part0:3.1" DEVICE="7z010" NAME="block_design" PACKAGE="clg225" SPEEDGRADE="-1"/>
 
@@ -30,11 +30,6 @@
         <CONNECTION INSTANCE="debounce_0" PORT="delay_in"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" NAME="filtered_signal_out" SIGIS="undef" SIGNAME="debounce_0_filtered_signal_out">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="debounce_0" PORT="filtered_signal_out"/>
-      </CONNECTIONS>
-    </PORT>
     <PORT DIR="I" NAME="raw_signal_in" SIGIS="undef" SIGNAME="External_Ports_raw_signal_in">
       <CONNECTIONS>
         <CONNECTION INSTANCE="debounce_0" PORT="raw_signal_in"/>
@@ -43,6 +38,12 @@
     <PORT DIR="I" NAME="reset_in" SIGIS="rst" SIGNAME="External_Ports_reset_in">
       <CONNECTIONS>
         <CONNECTION INSTANCE="debounce_0" PORT="reset_in"/>
+        <CONNECTION INSTANCE="bldc_decoder_0" PORT="reset_in"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="31" NAME="encoder_pos_out" RIGHT="0" SIGIS="undef" SIGNAME="bldc_decoder_0_encoder_pos_out">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="bldc_decoder_0" PORT="encoder_pos_out"/>
       </CONNECTIONS>
     </PORT>
   </EXTERNALPORTS>
@@ -95,6 +96,36 @@
   </EXTERNALINTERFACES>
 
   <MODULES>
+    <MODULE FULLNAME="/bldc_decoder_0" HWVERSION="1.0" INSTANCE="bldc_decoder_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="bldc_decoder" VLNV="user.org:module_ref:bldc_decoder:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="Component_Name" VALUE="block_design_bldc_decoder_0_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="clk_200M_in" SIGIS="undef" SIGNAME="processing_system7_0_FCLK_CLK1">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK1"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="2" NAME="hall_in" RIGHT="0" SIGIS="undef" SIGNAME="debounce_0_filtered_signal_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="debounce_0" PORT="filtered_signal_out"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="reset_in" SIGIS="rst" SIGNAME="External_Ports_reset_in">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="reset_in"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="encoder_pos_out" RIGHT="0" SIGIS="undef" SIGNAME="bldc_decoder_0_encoder_pos_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="encoder_pos_out"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
     <MODULE FULLNAME="/debounce_0" HWVERSION="1.0" INSTANCE="debounce_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="debounce" VLNV="user.org:module_ref:debounce:1.0">
       <DOCUMENTS/>
       <PARAMETERS>
@@ -124,7 +155,7 @@
         </PORT>
         <PORT DIR="O" NAME="filtered_signal_out" SIGIS="undef" SIGNAME="debounce_0_filtered_signal_out">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="filtered_signal_out"/>
+            <CONNECTION INSTANCE="bldc_decoder_0" PORT="hall_in"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -1126,6 +1157,7 @@
         <PORT CLKFREQUENCY="100000000" DIR="O" NAME="FCLK_CLK1" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK1">
           <CONNECTIONS>
             <CONNECTION INSTANCE="debounce_0" PORT="clk_200M_in"/>
+            <CONNECTION INSTANCE="bldc_decoder_0" PORT="clk_200M_in"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="FCLK_RESET0_N" SIGIS="rst"/>

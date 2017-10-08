@@ -24,6 +24,8 @@ use IEEE.NUMERIC_STD.ALL;
 entity TB_debounce is
 end TB_debounce;
 
+
+
 architecture Behavioral of TB_debounce is
 
     component debounce is
@@ -40,13 +42,13 @@ architecture Behavioral of TB_debounce is
     -- Signals declaration.
     signal clk              : std_logic;
     signal raw_signal       : std_logic;
-    signal delay            : std_logic
+    signal delay            : std_logic_vector (23 downto 0) := x"000fff";
     signal reset            : std_logic := '0';
     signal filtered_signal  : std_logic;
     signal edge_dir         : std_logic := '0';
     -- FSM states definition and declaration.
     type debounce_state is (low_state, high_state, bouncing_state);
-    signal previous_state, next_state: bldc_state := low_state;
+    signal previous_state, next_state: debounce_state := low_state;
     --  Clock period definition
     constant clk_period : time := 5 ns;
      
@@ -71,39 +73,20 @@ architecture Behavioral of TB_debounce is
         wait for clk_period/2;  --for next 2.5 ns signal is '1'.
     end process;
 
-
     -- Timer process
     process
         variable i : integer range 0 to 500;
     begin
         -- During 400x50=20000ns the edge_dir will keep stable.
         -- Even though, the state value will be updated every 50ns.
-        if (i <= 400) then
+        while (i <= 400) loop
             i := i + 1;
-            previous_state <= next_state
-            wait for 50 ns
-        end if;
+            previous_state <= next_state;
+            wait for 60 ns;
+        end loop;
         -- Reset the iteration counter and change the edge direction.
         i := 0;
         edge_dir <= not edge_dir;
-
-        --wait for 10 ms;
-        --while(i <= 423) loop
-        --    previous_state <= next_state;
-        --    i := i + 1;
-        --    wait for 500 ns;
-        --end loop;
-        
-        --i := 0;
-        --wait for 100 ms;
-        --edge_dir <= '1';
-
-        --while(i <= 166) loop
-        --    previous_state <= next_state;
-        --    i := i + 1;
-        --    wait for 1 ms;
-        --end loop;
-        --wait for 100000 ms;
     end process;
 
     -- debounce Finite State Machine
@@ -114,7 +97,7 @@ architecture Behavioral of TB_debounce is
             -- low state: the raw signal remains in a low state til edge_dir
             -- signal changes to high. Then, the signal will start bouncing.
             when low_state =>
-                raw_signal <= "0";
+                raw_signal <= '0';
                 if (edge_dir ='1') then 
                     next_state <= bouncing_state;
                 else
@@ -123,7 +106,7 @@ architecture Behavioral of TB_debounce is
             -- high state: the raw signal remains in a high state til edge_dir
             -- signal changes to low. Then, the signal will start bouncing.
             when high_state =>
-                raw_signal <= "1";
+                raw_signal <= '1';
                 if (edge_dir ='0') then 
                     next_state <= bouncing_state;
                 else

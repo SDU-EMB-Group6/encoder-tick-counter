@@ -40,7 +40,7 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 
 # The design that will be created by this Tcl script contains the following 
 # module references:
-# debounce
+# bldc_decoder, debounce
 
 # Please add the sources of those modules before sourcing this Tcl script.
 
@@ -166,10 +166,21 @@ proc create_root_design { parentCell } {
 
   # Create ports
   set delay_in [ create_bd_port -dir I -from 23 -to 0 delay_in ]
-  set filtered_signal_out [ create_bd_port -dir O filtered_signal_out ]
+  set encoder_pos_out [ create_bd_port -dir O -from 31 -to 0 encoder_pos_out ]
   set raw_signal_in [ create_bd_port -dir I raw_signal_in ]
   set reset_in [ create_bd_port -dir I -type rst reset_in ]
 
+  # Create instance: bldc_decoder_0, and set properties
+  set block_name bldc_decoder
+  set block_cell_name bldc_decoder_0
+  if { [catch {set bldc_decoder_0 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
+     catch {common::send_msg_id "BD_TCL-105" "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   } elseif { $bldc_decoder_0 eq "" } {
+     catch {common::send_msg_id "BD_TCL-106" "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   }
+  
   # Create instance: debounce_0, and set properties
   set block_name debounce
   set block_cell_name debounce_0
@@ -903,12 +914,13 @@ CONFIG.PCW_WDT_PERIPHERAL_FREQMHZ {133.333333} \
   connect_bd_intf_net -intf_net processing_system7_0_FIXED_IO [get_bd_intf_ports FIXED_IO] [get_bd_intf_pins processing_system7_0/FIXED_IO]
 
   # Create port connections
-  connect_bd_net -net debounce_0_filtered_signal_out [get_bd_ports filtered_signal_out] [get_bd_pins debounce_0/filtered_signal_out]
+  connect_bd_net -net bldc_decoder_0_encoder_pos_out [get_bd_ports encoder_pos_out] [get_bd_pins bldc_decoder_0/encoder_pos_out]
+  connect_bd_net -net debounce_0_filtered_signal_out [get_bd_pins bldc_decoder_0/hall_in] [get_bd_pins debounce_0/filtered_signal_out]
   connect_bd_net -net delay_in_1 [get_bd_ports delay_in] [get_bd_pins debounce_0/delay_in]
   connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK]
-  connect_bd_net -net processing_system7_0_FCLK_CLK1 [get_bd_pins debounce_0/clk_200M_in] [get_bd_pins processing_system7_0/FCLK_CLK1]
+  connect_bd_net -net processing_system7_0_FCLK_CLK1 [get_bd_pins bldc_decoder_0/clk_200M_in] [get_bd_pins debounce_0/clk_200M_in] [get_bd_pins processing_system7_0/FCLK_CLK1]
   connect_bd_net -net raw_signal_in_1 [get_bd_ports raw_signal_in] [get_bd_pins debounce_0/raw_signal_in]
-  connect_bd_net -net reset_in_1 [get_bd_ports reset_in] [get_bd_pins debounce_0/reset_in]
+  connect_bd_net -net reset_in_1 [get_bd_ports reset_in] [get_bd_pins bldc_decoder_0/reset_in] [get_bd_pins debounce_0/reset_in]
 
   # Create address segments
 
