@@ -1,2 +1,13 @@
-## Vivado auxiliary folders
-**/encoder_tick_counter.cache/**
+## Vivado auxiliary folders.
+**/*.runs/**
+**/*.cache/**
+
+## Simulation compilation files.
+*.sim/**/xsim.dir/**
+*.sim/**.sh
+**.wdb
+
+## Log and back-up files.
+**.bak
+**.log
+**.jou
